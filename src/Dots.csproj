@@ -25,7 +25,7 @@
 
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('MacOS'))">
     <DefineConstants>$(DefineConstants);MACOS</DefineConstants>
-    <TargetFramework>net8.0-macos</TargetFramework>
+    <TargetFramework>net10.0-macos</TargetFramework>
     <RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
     <OutputType>Exe</OutputType>
     <UseAppHost>true</UseAppHost>
