@@ -1,17 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using CommunityToolkit.Mvvm.Input;
-using Dots.Models;
-using Dots.Services;
-using Dots.Data;
-using Dots.Helpers;
-using ObservableView;
-using ObservableView.Searching.Operators;
 using System.IO;
 using System.Net.Http;
 using AsyncAwaitBestPractices;
-using Avalonia.Media;
-using Avalonia.Threading;
+using CommunityToolkit.Mvvm.Input;
+using Dots.Data;
+using Dots.Helpers;
+using Dots.Models;
+using Dots.Services;
+using ObservableView;
+using ObservableView.Searching.Operators;
 
 
 namespace Dots.ViewModels;

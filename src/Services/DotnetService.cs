@@ -118,7 +118,7 @@ public class DotnetService
 		{
 			return _releaseIndex;
 		}
-		if (_releaseIndex is null && await BlobCache.UserAccount.ContainsKey(Constants.ReleaseIndexKey) && !force)
+		if (_releaseIndex is null && await CacheDatabase.UserAccount.ContainsKey(Constants.ReleaseIndexKey) && !force)
 		{
 			var json = await File.ReadAllTextAsync(Constants.ReleaseIndexPath);
 			var deserialized = JsonSerializer.Deserialize<ReleaseIndexInfo>(json, ReleaseSerializerOptions.Options);
@@ -137,7 +137,7 @@ public class DotnetService
 
 
 		await File.WriteAllTextAsync(Constants.ReleaseIndexPath, response);
-		BlobCache.UserAccount.InsertObject(Constants.ReleaseIndexKey, Constants.ReleaseIndexPath);
+		CacheDatabase.UserAccount.InsertObject(Constants.ReleaseIndexKey, Constants.ReleaseIndexPath);
 		return _releaseIndex;
 	}
 
@@ -147,7 +147,7 @@ public class DotnetService
 		{
 			return _releases[channel];
 		}
-		if (await BlobCache.UserAccount.ContainsKey(Constants.ReleaseBaseKey + channel) && !force)
+		if (await CacheDatabase.UserAccount.ContainsKey(Constants.ReleaseBaseKey + channel) && !force)
 		{
 			var cachedFile = Path.Combine(Constants.AppDataPath, $"release-{channel}.json");
 			var json = await File.ReadAllTextAsync(cachedFile);
@@ -163,7 +163,7 @@ public class DotnetService
 		var releases = JsonSerializer.Deserialize<ReleaseInfo>(response, ReleaseSerializerOptions.Options);
 		var path = Path.Combine(Constants.AppDataPath, $"release-{channel}.json");
 		await File.WriteAllTextAsync(path, response);
-		await BlobCache.UserAccount.InsertObject(Constants.ReleaseBaseKey + channel, path);
+		await CacheDatabase.UserAccount.InsertObject(Constants.ReleaseBaseKey + channel, path);
 		return releases.Releases;
 	}
 
@@ -176,9 +176,9 @@ public class DotnetService
 			{
 				return _installedSdks;
 			}
-			if (await BlobCache.UserAccount.ContainsKey(Constants.InstalledSdksKey) && !force)
+			if (await CacheDatabase.UserAccount.ContainsKey(Constants.InstalledSdksKey) && !force)
 			{
-				var sdks = await BlobCache.UserAccount.GetObject<string>(Constants.InstalledSdksKey);
+				var sdks = await CacheDatabase.UserAccount.GetObject<string>(Constants.InstalledSdksKey);
 				_installedSdks = JsonSerializer.Deserialize<List<InstalledSdk>>(sdks);
 				return _installedSdks;
 			}
@@ -205,7 +205,7 @@ public class DotnetService
 				}
 			}
 			_installedSdks = result;
-			await BlobCache.UserAccount.InsertObject(Constants.InstalledSdksKey, JsonSerializer.Serialize(result));
+			await CacheDatabase.UserAccount.InsertObject(Constants.InstalledSdksKey, JsonSerializer.Serialize(result));
 			return _installedSdks;
 		}
 		catch (Exception ex)

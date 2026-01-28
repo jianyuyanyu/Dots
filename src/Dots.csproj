@@ -9,7 +9,7 @@
 
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
     <DefineConstants>$(DefineConstants);WINDOWS</DefineConstants>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <OutputType>WinExe</OutputType>
     <ApplicationIcon>Assets/appicon.ico</ApplicationIcon>
     <Version>2.0.0</Version>
@@ -25,7 +25,7 @@
 
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('MacOS'))">
     <DefineConstants>$(DefineConstants);MACOS</DefineConstants>
-    <TargetFramework>net8.0-macos</TargetFramework>
+    <TargetFramework>net10.0-macos</TargetFramework>
     <RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
     <OutputType>Exe</OutputType>
     <UseAppHost>true</UseAppHost>
@@ -67,27 +67,28 @@
 
 
   <ItemGroup>
-    <PackageReference Include="AsyncAwaitBestPractices" Version="9.0.0" />
-    <PackageReference Include="Avalonia" Version="11.2.1" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.2.1" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.1" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.1" />
-    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.2.0.1" />
+    <PackageReference Include="AsyncAwaitBestPractices" Version="10.0.0" />
+    <PackageReference Include="Avalonia" Version="11.3.11" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.11" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.11" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.11" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.3.0.6" />
     <!--Condition
     below is needed to remove Avalonia.Diagnostics package from build output in Release
     configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.1" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.11" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
-    <PackageReference Include="System.Reactive" Version="6.0.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.2" />
+    <PackageReference Include="System.Reactive" Version="6.1.0" />
     <PackageReference Include="M.BindableProperty.Generator" Version="0.11.1" />
-    <PackageReference Include="CliWrap" Version="3.6.7" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0-preview2" />
-    <PackageReference Include="akavache" Version="10.1.6" />
-    <PackageReference Include="HyperText.Avalonia" Version="11.0.0-rc1" />
-    <PackageReference Include="AnimatedImage.Avalonia" Version="1.0.7" />
+    <PackageReference Include="CliWrap" Version="3.10.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Akavache.Sqlite3" Version="11.5.1" />
+		<PackageReference Include="Akavache.SystemTextJson" Version="*" />
+		<PackageReference Include="HyperText.Avalonia" Version="11.0.0-rc1" />
+    <PackageReference Include="AnimatedImage.Avalonia" Version="2.1.2" />
     <PackageReference Include="Dotnet.Bundle" Version="*" />
   </ItemGroup>
 

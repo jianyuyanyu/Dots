@@ -1,31 +1,33 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="using:Avalonia.Xaml.Interactivity"
-        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        xmlns:hyper="clr-namespace:HyperText.Avalonia.Controls;assembly=HyperText.Avalonia"
-        xmlns:anim="https://github.com/whistyun/AnimatedImage.Avalonia"
-        mc:Ignorable="d"
-        d:DesignWidth="700"
-        d:DesignHeight="450"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:i="using:Avalonia.Xaml.Interactivity"
+		xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+		xmlns:hyper="clr-namespace:HyperText.Avalonia.Controls;assembly=HyperText.Avalonia"
+		xmlns:anim="https://github.com/whistyun/AnimatedImage.Avalonia"
+		mc:Ignorable="d"
+		d:DesignWidth="700"
+		d:DesignHeight="450"
 		Width="1200"
 		Height="700"
-        xmlns:vm="using:Dots.ViewModels"
-        xmlns:models="using:Dots.Models"
-        xmlns:helpers="using:Dots.Helpers"
-        xmlns:data="using:Dots.Data"
-        x:Class="Dots.MainWindow"
-        x:DataType="vm:MainViewModel"
-        Icon="/Assets/iconlogo.png"
-        x:Name="PageSelf"
-        Title="Dots">
+		xmlns:vm="using:Dots.ViewModels"
+		xmlns:models="using:Dots.Models"
+		xmlns:helpers="using:Dots.Helpers"
+		xmlns:data="using:Dots.Data"
+		x:Class="Dots.MainWindow"
+		x:DataType="vm:MainViewModel"
+		Icon="/Assets/iconlogo.png"
+		x:Name="PageSelf"
+		Title="Dots">
 	<Window.Styles>
 		<Style Selector="FlyoutPresenter.DotsFlyout">
 			<Setter Property="Background"
 					Value="{StaticResource Background}" />
 			<Setter Property="BorderThickness"
-					Value="0" />
+					Value="2" />
+			<Setter Property="BorderBrush"
+					Value="{StaticResource BackgroundSubtle}" />
 			<Setter Property="Margin"
 					Value="0,4,4,0" />
 			<Setter Property="Width"
@@ -139,10 +141,10 @@
 					  Opacity="0.5"
 					  Height="42" />
 				<Button x:Name="FilterButton"
-								Grid.Column="0"
-								Background="{StaticResource Background}"
-								Foreground="White"
-							HorizontalContentAlignment="Center"
+						Grid.Column="0"
+						Background="{StaticResource Background}"
+						Foreground="White"
+						HorizontalContentAlignment="Center"
 						VerticalContentAlignment="Center"
 						VerticalAlignment="Center"
 						ToolTip.Tip="Filter SDKs"
@@ -250,9 +252,9 @@
 				<SplitView.Content>
 					<Grid RowDefinitions="Auto,*,20">
 						<Grid
-							x:Name="SelectionInfoContainer"
-							Height="0"
-							Grid.Row="0">
+						x:Name="SelectionInfoContainer"
+						Height="0"
+						Grid.Row="0">
 							<Button x:Name="CloseSelectionInfoButton" Background="Transparent"
 									Tapped="CloseSelectionInfoButton_Tapped"
 									HorizontalAlignment="Right"
@@ -262,7 +264,7 @@
 							<StackPanel x:Name="SelectionInfoBox"
 										ClipToBounds="True"
 										Margin="8"
-								Spacing="12">
+										Spacing="12">
 
 								<TextBlock x:Name="SelectionInfoText"
 										   HorizontalAlignment="Left"
@@ -362,10 +364,10 @@
 														   FontSize="10" />
 											</Border>
 											<Border Height="20"
-											Padding="6,0"
-											Margin="0,0,6,0"
-											VerticalAlignment="Center"
-											CornerRadius="10">
+													Padding="6,0"
+													Margin="0,0,6,0"
+													VerticalAlignment="Center"
+													CornerRadius="10">
 												<Border.Background>
 													<SolidColorBrush Color="{Binding Data.ReleaseType, Converter={StaticResource ReleaseTypeToColorConverter}}" />
 												</Border.Background>
@@ -489,14 +491,14 @@
 							<TextBlock FontFamily="{StaticResource LucideIcons}" Grid.Column="0"
 									   VerticalAlignment="Center"
 									   Margin="8,0,8,0"
-								   Text="{Binding CurrentStatusIcon}"
+									   Text="{Binding CurrentStatusIcon}"
 									   Foreground="White" FontSize="10" />
 							<TextBlock Text="{Binding CurrentStatusText}" Foreground="White" Grid.Column="1" FontSize="9" VerticalAlignment="Center" />
 						</Grid>
 					</Grid>
 				</SplitView.Content>
 				<SplitView.Pane>
-					<Grid ColumnDefinitions="30,*"
+					<Grid ColumnDefinitions="30,1,*"
 						  Background="{StaticResource BackgroundSubtle}">
 
 						<Button Grid.Column="0"
@@ -507,396 +509,449 @@
 								FontSize="15"
 								HorizontalContentAlignment="Center"
 								VerticalContentAlignment="Center"
-								VerticalAlignment="Bottom"
+								VerticalAlignment="Top"
 								BorderThickness="0"
 								HorizontalAlignment="Left"
 								Width="36"
 								Height="40"
-								CornerRadius="8,0,0,0"
+								CornerRadius="0,0,0,8"
 								Padding="0"
 								Margin="0,0,0,-1"
 								x:Name="ToggleDetailsButton"
 								Tapped="ToggleDetails_Tapped" />
 
+						<Border Grid.Column="1"
+								Width="1"
+								Background="{StaticResource Background}"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch" />
+						<Border Grid.Column="0"
+								Height="20"
+								Background="{StaticResource Background}"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Bottom" />
 						<Grid x:Name="DetailsPanel"
-							  Grid.Column="1"
-							  Background="{StaticResource Background}"
+							  Grid.Column="2"
+							  Background="{StaticResource BackgroundSubtle}"
 							  DataContext="{Binding SelectedSdk}">
 							<!-- EMPTY -->
-							<StackPanel Margin="20"
-										VerticalAlignment="Center"
-										IsVisible="{ReflectionBinding ElementName=PageSelf, Path=DataContext.SelectedSdk, Converter={x:Static ObjectConverters.IsNull}}">
-								<Image Source="/Assets/logo_nothing.png"
-									   Stretch="UniformToFill"
-									   Margin="20,0,20,20" />
-								<TextBlock Text="It's empty here"
-										   HorizontalAlignment="Center"
-										   FontFamily="{StaticResource SpaceGroteskBold}" />
-								<TextBlock Text="Select an SDK to view details"
-										   HorizontalAlignment="Center" />
-
-							</StackPanel>
-
+							<Border Margin="12"
+									CornerRadius="8"
+									VerticalAlignment="Center"
+									IsVisible="{ReflectionBinding ElementName=PageSelf, Path=DataContext.SelectedSdk, Converter={x:Static ObjectConverters.IsNull}}">
+								<StackPanel Margin="20">
+									<Image Source="/Assets/logo_nothing.png"
+										   Stretch="UniformToFill"
+										   Margin="20,0,20,20" />
+									<TextBlock Text="It's empty here"
+											   HorizontalAlignment="Center"
+											   FontFamily="{StaticResource SpaceGroteskBold}" />
+									<TextBlock Text="Select an SDK to view details"
+											   HorizontalAlignment="Center" />
+								</StackPanel>
+							</Border>
 							<ScrollViewer IsVisible="{ReflectionBinding ElementName=PageSelf, Path=DataContext.SelectedSdk, Converter={x:Static ObjectConverters.IsNotNull}}">
 								<StackPanel>
 									<!-- DATA IS NULL -->
 									<StackPanel IsVisible="{ReflectionBinding ElementName=PageSelf, Path=DataContext.SelectedSdk.Data, Converter={x:Static ObjectConverters.IsNull}}"
-												Margin="12,0,0,0">
-										<Border Width="70"
-												Height="70"
-												Background="{Binding Color}"
-												CornerRadius="35"
-												Margin="0,0,0,6">
-											<TextBlock Text="{Binding Group}"
-													   FontFamily="{StaticResource DottedFont}"
-													   FontSize="32"
-													   HorizontalAlignment="Center"
-													   VerticalAlignment="Center" />
+												Margin="12"
+												Spacing="12">
+										<!-- Header Card -->
+										<Border Background="{StaticResource Background}"
+												CornerRadius="8"
+												Padding="12">
+											<StackPanel>
+												<Border Width="70"
+														Height="70"
+														Background="{Binding Color}"
+														CornerRadius="35"
+														Margin="0,0,0,6">
+													<TextBlock Text="{Binding Group}"
+															   FontFamily="{StaticResource DottedFont}"
+															   FontSize="32"
+															   HorizontalAlignment="Center"
+															   VerticalAlignment="Center" />
+												</Border>
+												<TextBlock Text="{Binding VersionDisplay}"
+														   FontSize="20" />
+												<TextBlock Margin="0,5,0,5"
+														   Text="{Binding Path}"
+														   Tapped="PathTextBlock_Tapped"
+														   FontSize="11">
+													<TextBlock.Styles>
+														<Style Selector="TextBlock">
+															<Style.Setters>
+																<Setter Property="Foreground"
+																		Value="{StaticResource Link}" />
+															</Style.Setters>
+														</Style>
+														<Style Selector="TextBlock:pointerover">
+															<Style.Setters>
+																<Setter Property="Foreground"
+																		Value="{StaticResource LinkHover}" />
+																<Setter Property="TextDecorations"
+																		Value="Underline" />
+																<Setter Property="Cursor"
+																		Value="Hand" />
+															</Style.Setters>
+														</Style>
+													</TextBlock.Styles>
+												</TextBlock>
+											</StackPanel>
 										</Border>
-										<TextBlock Text="{Binding VersionDisplay}"
-												   FontSize="20" />
-
-										<TextBlock Margin="0,5,0,5"
-												   Text="{Binding Path}"
-												   Tapped="PathTextBlock_Tapped"
-												   FontSize="11">
-											<TextBlock.Styles>
-												<Style Selector="TextBlock">
-													<Style.Setters>
-														<Setter Property="Foreground"
-																Value="{StaticResource Link}" />
-													</Style.Setters>
-												</Style>
-												<Style Selector="TextBlock:pointerover">
-													<Style.Setters>
-														<Setter Property="Foreground"
-																Value="{StaticResource LinkHover}" />
-														<Setter Property="TextDecorations"
-																Value="Underline" />
-														<Setter Property="Cursor"
-																Value="Hand" />
-													</Style.Setters>
-												</Style>
-											</TextBlock.Styles>
-										</TextBlock>
-										<StackPanel Margin="0,50,0,0"
-													VerticalAlignment="Bottom">
-											<Image Source="/Assets/logo_nothing.png"
-												   Stretch="UniformToFill"
-												   Margin="20,0,20,20" />
-											<TextBlock Text="It's empty here"
-													   HorizontalAlignment="Center"
-													   FontFamily="{StaticResource SpaceGroteskBold}" />
-											<TextBlock Text="there is not much information about this SDK"
-													   HorizontalAlignment="Center" />
-										</StackPanel>
+										<!-- Empty Info Card -->
+										<Border Background="{StaticResource Background}"
+												CornerRadius="8"
+												Padding="12">
+											<StackPanel>
+												<Image Source="/Assets/logo_nothing.png"
+													   Stretch="UniformToFill"
+													   Margin="20,0,20,20" />
+												<TextBlock Text="It's empty here"
+														   HorizontalAlignment="Center"
+														   FontFamily="{StaticResource SpaceGroteskBold}" />
+												<TextBlock Text="there is not much information about this SDK"
+														   HorizontalAlignment="Center" />
+											</StackPanel>
+										</Border>
 									</StackPanel>
 
 									<!-- DATA -->
 									<StackPanel x:DataType="models:Sdk"
-												Margin="12,0,0,0"
+												Margin="12"
+												Spacing="12"
 												IsVisible="{ReflectionBinding ElementName=PageSelf, Path=DataContext.SelectedSdk.Data, Converter={x:Static ObjectConverters.IsNotNull}}">
-										<Border Width="70"
-												Height="70"
-												Background="{Binding Color}"
-												CornerRadius="35"
-												Margin="0,0,0,6">
-											<TextBlock Text="{Binding Group}"
-													   FontFamily="{StaticResource DottedFont}"
-													   FontSize="52"
-													   HorizontalAlignment="Center"
-													   VerticalAlignment="Center" />
-										</Border>
-										<TextBlock FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Left">
-											<Run Text=".NET" />
-											<Run Text="{Binding VersionDisplay}" />
-										</TextBlock>
-										<StackPanel Orientation="Horizontal">
-											<Border Height="20"
-													Padding="6,0"
-													Margin="0,0,6,0"
-													Background="{StaticResource Danger}"
-													VerticalAlignment="Center"
-													CornerRadius="10"
-													IsVisible="{Binding Data.Security}">
-												<TextBlock VerticalAlignment="Center"
-														   Text="Security Patch"
-														   FontSize="10" />
-											</Border>
-											<Border Height="20"
-													IsVisible="{Binding Data.Preview}"
-													Padding="6,0"
-													Margin="0,0,6,0"
-													CornerRadius="10"
-													VerticalAlignment="Center">
-												<Border.Background>
-													<SolidColorBrush Color="{Binding SdkData.Version, Converter={StaticResource PreviewTypeToColorConverter}}" />
-												</Border.Background>
-												<TextBlock VerticalAlignment="Center"
-														   Text="{Binding SdkData.Version, Converter={StaticResource PreviewTypeToStringConverter}}"
-														   FontSize="10" />
-											</Border>
-											<Border Height="20"
-													Padding="6,0"
-													Margin="0,0,6,0"
-													VerticalAlignment="Center"
-													CornerRadius="10">
-												<Border.Background>
-													<SolidColorBrush Color="{Binding Data.SupportPhase, Converter={StaticResource SupportPhaseToColorConverter}}" />
-												</Border.Background>
-												<TextBlock VerticalAlignment="Center"
-														   Text="{Binding Data.SupportPhase}"
-														   FontSize="10" />
-											</Border>
-											<Border Height="20"
-											Padding="6,0"
-											Margin="0,0,6,0"
-											VerticalAlignment="Center"
-											CornerRadius="10">
-												<Border.Background>
-													<SolidColorBrush Color="{Binding Data.ReleaseType, Converter={StaticResource ReleaseTypeToColorConverter}}" />
-												</Border.Background>
-												<TextBlock VerticalAlignment="Center"
-														   Text="{Binding Data.ReleaseType}"
-														   FontSize="10" />
-											</Border>
-										</StackPanel>
-										<TextBlock Margin="0,5,0,5"
-												   Text="{Binding Path}"
-												   Tapped="PathTextBlock_Tapped"
-												   FontSize="11">
-											<TextBlock.Styles>
-												<Style Selector="TextBlock">
-													<Style.Setters>
-														<Setter Property="Foreground"
-																Value="{StaticResource Link}" />
-													</Style.Setters>
-												</Style>
-												<Style Selector="TextBlock:pointerover">
-													<Style.Setters>
-														<Setter Property="Foreground"
-																Value="{StaticResource LinkHover}" />
-														<Setter Property="TextDecorations"
-																Value="Underline" />
-														<Setter Property="Cursor"
-																Value="Hand" />
-													</Style.Setters>
-												</Style>
-											</TextBlock.Styles>
-										</TextBlock>
-										<StackPanel HorizontalAlignment="Left"
-													Margin="0,0,0,8"
-													Width="230"
-													Spacing="4"
-													IsVisible="{Binding IsBusy}">
-											<TextBlock Text="{Binding StatusMessage}"
-													   HorizontalAlignment="Center" />
-											<StackPanel Orientation="Horizontal">
-												<ProgressBar IsIndeterminate="false"
-															 Value="{Binding ProgressTask.Value}"
-															 Minimum="0"
-															 Maximum="100"
-															 ShowProgressText="True"
-															 Height="20"
-															 Margin="6,0,6,0"
-															 Foreground="White"
-															 IsVisible="True"
-															 HorizontalAlignment="Center" />
-												<Button Background="Transparent"
-														Foreground="White"
-														Padding="0"
-														Content="{x:Static helpers:LucideIcons.CircleX}"
-														Command="{ReflectionBinding ElementName=PageSelf, Path=DataContext.CancelTaskCommand}"
-														CommandParameter="{Binding .}"
-														FontFamily="{StaticResource LucideIcons}"
-														FontSize="15"
-														HorizontalContentAlignment="Center"
-														VerticalContentAlignment="Center"
-														Width="30"
-														Height="30" />
-
-											</StackPanel>
-										</StackPanel>
-										<StackPanel Orientation="Horizontal"
-													Margin="0,5,0,10"
-													VerticalAlignment="Center"
-													IsVisible="{Binding !IsBusy}">
-											<Button Height="32"
-													Width="100"
-													Background="DarkGray"
-													Padding="0"
-													FontSize="12"
-													HorizontalContentAlignment="Center"
-													VerticalContentAlignment="Center"
-													Margin="0,0,12,0"
-													VerticalAlignment="Center"
-													Command="{ReflectionBinding ElementName=PageSelf, Path=DataContext.OpenOrDownloadCommand}"
-													CommandParameter="{Binding .}"
-													Classes.Installed="{Binding Installed}"
-													Classes.NotInstalled="{Binding !Installed}"
-													Grid.Column="2">
-												<Button.Styles>
-													<Style Selector="Button.Installed">
-														<Style.Setters>
-															<Setter Property="Content"
-																	Value="Open" />
-														</Style.Setters>
-													</Style>
-													<Style Selector="Button.NotInstalled">
-														<Style.Setters>
-															<Setter Property="Content"
-																	Value="Download" />
-														</Style.Setters>
-													</Style>
-												</Button.Styles>
-
-											</Button>
-											<Button Content="Uninstall"
-													Height="32"
-													Width="100"
-													Margin="0,0,12,0"
-													FontSize="12"
-													Padding="0"
-													HorizontalContentAlignment="Center"
-													VerticalContentAlignment="Center"
-													VerticalAlignment="Center"
-													Command="{ReflectionBinding ElementName=PageSelf, Path=DataContext.InstallOrUninstallCommand}"
-													CommandParameter="{Binding .}"
-													Classes.Installed="{Binding Installed}"
-													Classes.NotInstalled="{Binding !Installed}"
-													Grid.Column="2">
-												<Button.Styles>
-													<Style Selector="Button.Installed">
-														<Style.Setters>
-															<Setter Property="Background"
-																	Value="{StaticResource Danger}" />
-														</Style.Setters>
-													</Style>
-													<Style Selector="Button.NotInstalled">
-														<Style.Setters>
-															<Setter Property="Background"
-																	Value="{StaticResource Accent}" />
-														</Style.Setters>
-													</Style>
-
-													<Style Selector="Button.Installed">
-														<Style.Setters>
-															<Setter Property="Content"
-																	Value="Uninstall" />
-														</Style.Setters>
-													</Style>
-													<Style Selector="Button.NotInstalled">
-														<Style.Setters>
-															<Setter Property="Content"
-																	Value="Install" />
-														</Style.Setters>
-													</Style>
-												</Button.Styles>
-											</Button>
-										</StackPanel>
-										<TextBlock Text="Release Notes"
-												   FontWeight="Bold" />
-
-										<hyper:Hyperlink x:Name="ReleaseNotesText"
-														 Alias="{Binding Data.ReleaseNotes}"
-														 TextWrapping="Wrap"
-														 Margin="0,0,12,0"
-														 HorizontalAlignment="Left"
-														 Url="{Binding Data.ReleaseNotes}" />
-
-										<TextBlock Text="Release Date"
-												   FontWeight="Bold"
-												   Margin="0,12,0,0" />
-										<TextBlock Text="{Binding Data.ReleaseDate}" />
-										<TextBlock Text="Runtime Version"
-												   FontWeight="Bold"
-												   Margin="0,12,0,0" />
-										<TextBlock Text="{Binding SdkData.RuntimeVersion}" />
-										<TextBlock Text="C# Version"
-												   FontWeight="Bold"
-												   Margin="0,12,0,0" />
-										<TextBlock Text="{Binding SdkData.CsharpVersion}" />
-										<TextBlock Text="F# Version"
-												   FontWeight="Bold"
-												   Margin="0,12,0,0" />
-										<TextBlock Text="{Binding SdkData.FsharpVersion}" />
-										<TextBlock Text="VB Version"
-												   FontWeight="Bold"
-												   Margin="0,12,0,0" />
-										<TextBlock Text="{Binding SdkData.VbVersion}" />
-										<TextBlock Text="Visual Studio Support"
-												   FontWeight="Bold"
-												   Margin="0,12,0,0" />
-										<TextBlock Text="{Binding SdkData.VsSupport}" />
-										<TextBlock Text="{Binding SdkData.VsVersion}" />
-										<TextBlock Text="Visual Studio Mac Support"
-												   FontWeight="Bold"
-												   Margin="0,12,0,0" />
-										<TextBlock Text="{Binding SdkData.VsMacSupport}" />
-										<TextBlock Text="{Binding SdkData.VsMacVersion}" />
-										<TextBlock Text="Downloads"
-												   FontWeight="Bold"
-												   Margin="0,12,0,0" />
-										<ItemsControl ItemsSource="{Binding SdkData.Files}"
-													  HorizontalAlignment="Stretch"
-													  Background="Transparent">
-											<ItemsControl.ItemTemplate>
-												<DataTemplate x:DataType="data:FileInfo">
-													<Grid Height="50"
-														  ColumnDefinitions="60,*"
-																Margin="0,8,8,8">
-														<Border Background="#5effffff"
-																Grid.Column="0"
-																Height="50"
-																Width="50"
-																HorizontalAlignment="Left"
-																CornerRadius="25"
-																Padding="2">
-															<TextBlock VerticalAlignment="Center"
-																	   HorizontalAlignment="Center"
-																	   TextAlignment="Center"
-																	   Width="50"
-																	   FontSize="30"
-																	   Text="{Binding Rid, Converter={StaticResource RidToIconConverter}}" />
-														</Border>
-														<Border
-															Grid.Column="0"
-															BorderThickness="2"
-															Height="22"
-															Width="22"
-															Margin="0,3,3,0"
-															HorizontalAlignment="Right"
-															VerticalAlignment="Bottom"
+										<!-- Header Card -->
+										<Border Background="{StaticResource Background}"
+												CornerRadius="8"
+												Padding="12">
+											<StackPanel>
+												<Border Width="70"
+														Height="70"
+														Background="{Binding Color}"
+														CornerRadius="35"
+														Margin="0,0,0,6">
+													<TextBlock Text="{Binding Group}"
+															   FontFamily="{StaticResource DottedFont}"
+															   FontSize="52"
+															   HorizontalAlignment="Center"
+															   VerticalAlignment="Center" />
+												</Border>
+												<TextBlock FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Left">
+													<Run Text=".NET" />
+													<Run Text="{Binding VersionDisplay}" />
+												</TextBlock>
+												<StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+													<Border Height="20"
+															Padding="6,0"
+															Margin="0,0,6,0"
+															Background="{StaticResource Danger}"
+															VerticalAlignment="Center"
+															CornerRadius="10"
+															IsVisible="{Binding Data.Security}">
+														<TextBlock VerticalAlignment="Center"
+																   Text="Security Patch"
+																   FontSize="10" />
+													</Border>
+													<Border Height="20"
+															IsVisible="{Binding Data.Preview}"
+															Padding="6,0"
+															Margin="0,0,6,0"
+															CornerRadius="10"
+															VerticalAlignment="Center">
+														<Border.Background>
+															<SolidColorBrush Color="{Binding SdkData.Version, Converter={StaticResource PreviewTypeToColorConverter}}" />
+														</Border.Background>
+														<TextBlock VerticalAlignment="Center"
+																   Text="{Binding SdkData.Version, Converter={StaticResource PreviewTypeToStringConverter}}"
+																   FontSize="10" />
+													</Border>
+													<Border Height="20"
+															Padding="6,0"
+															Margin="0,0,6,0"
+															VerticalAlignment="Center"
 															CornerRadius="10">
-															<Border.BorderBrush>
-																<SolidColorBrush Color="{StaticResource Background}" />
-															</Border.BorderBrush>
-															<Border.Background>
-																<SolidColorBrush Color="{Binding FileName, Converter={StaticResource FileNameToColorConverter}}" />
-															</Border.Background>
-															<TextBlock VerticalAlignment="Center"
-																	   HorizontalAlignment="Center"
-																	   TextAlignment="Center"
-																	   Width="20"
-																	   FontSize="12"
-																	   FontFamily="{StaticResource LucideIcons}"
-																	   Text="{Binding FileName, Converter={StaticResource FileNameToIconConverter}}" />
-														</Border>
-														<StackPanel Spacing="2"
-																	Margin="4,0,0,0"
-																	Grid.Column="1"
-																	VerticalAlignment="Center">
-															<TextBlock VerticalAlignment="Center"
-																	   Text="{Binding Rid}" />
-															<hyper:Hyperlink Alias="{Binding FileName}"
-																			 MaxLines="3"
-																			 TextWrapping="Wrap"
-																			Url="{Binding Url}" />
-														</StackPanel>
-													</Grid>
-												</DataTemplate>
-											</ItemsControl.ItemTemplate>
-										</ItemsControl>
+														<Border.Background>
+															<SolidColorBrush Color="{Binding Data.SupportPhase, Converter={StaticResource SupportPhaseToColorConverter}}" />
+														</Border.Background>
+														<TextBlock VerticalAlignment="Center"
+																   Text="{Binding Data.SupportPhase}"
+																   FontSize="10" />
+													</Border>
+													<Border Height="20"
+															Padding="6,0"
+															Margin="0,0,6,0"
+															VerticalAlignment="Center"
+															CornerRadius="10">
+														<Border.Background>
+															<SolidColorBrush Color="{Binding Data.ReleaseType, Converter={StaticResource ReleaseTypeToColorConverter}}" />
+														</Border.Background>
+														<TextBlock VerticalAlignment="Center"
+																   Text="{Binding Data.ReleaseType}"
+																   FontSize="10" />
+													</Border>
+												</StackPanel>
+												<TextBlock Margin="0,8,0,0"
+														   Text="{Binding Path}"
+														   Tapped="PathTextBlock_Tapped"
+														   FontSize="11">
+													<TextBlock.Styles>
+														<Style Selector="TextBlock">
+															<Style.Setters>
+																<Setter Property="Foreground"
+																		Value="{StaticResource Link}" />
+															</Style.Setters>
+														</Style>
+														<Style Selector="TextBlock:pointerover">
+															<Style.Setters>
+																<Setter Property="Foreground"
+																		Value="{StaticResource LinkHover}" />
+																<Setter Property="TextDecorations"
+																		Value="Underline" />
+																<Setter Property="Cursor"
+																		Value="Hand" />
+															</Style.Setters>
+														</Style>
+													</TextBlock.Styles>
+												</TextBlock>
+												<!-- Progress / Busy State -->
+												<StackPanel HorizontalAlignment="Left"
+															Margin="0,8,0,0"
+															Width="230"
+															Spacing="4"
+															IsVisible="{Binding IsBusy}">
+													<TextBlock Text="{Binding StatusMessage}"
+															   HorizontalAlignment="Center" />
+													<StackPanel Orientation="Horizontal">
+														<ProgressBar IsIndeterminate="false"
+																	 Value="{Binding ProgressTask.Value}"
+																	 Minimum="0"
+																	 Maximum="100"
+																	 ShowProgressText="True"
+																	 Height="20"
+																	 Margin="6,0,6,0"
+																	 Foreground="White"
+																	 IsVisible="True"
+																	 HorizontalAlignment="Center" />
+														<Button Background="Transparent"
+																Foreground="White"
+																Padding="0"
+																Content="{x:Static helpers:LucideIcons.CircleX}"
+																Command="{ReflectionBinding ElementName=PageSelf, Path=DataContext.CancelTaskCommand}"
+																CommandParameter="{Binding .}"
+																FontFamily="{StaticResource LucideIcons}"
+																FontSize="15"
+																HorizontalContentAlignment="Center"
+																VerticalContentAlignment="Center"
+																Width="30"
+																Height="30" />
+													</StackPanel>
+												</StackPanel>
+												<!-- Action Buttons -->
+												<StackPanel Orientation="Horizontal"
+															Margin="0,8,0,0"
+															VerticalAlignment="Center"
+															IsVisible="{Binding !IsBusy}">
+													<Button Height="32"
+															Width="100"
+															Background="DarkGray"
+															Padding="0"
+															FontSize="12"
+															HorizontalContentAlignment="Center"
+															VerticalContentAlignment="Center"
+															Margin="0,0,12,0"
+															VerticalAlignment="Center"
+															Command="{ReflectionBinding ElementName=PageSelf, Path=DataContext.OpenOrDownloadCommand}"
+															CommandParameter="{Binding .}"
+															Classes.Installed="{Binding Installed}"
+															Classes.NotInstalled="{Binding !Installed}">
+														<Button.Styles>
+															<Style Selector="Button.Installed">
+																<Style.Setters>
+																	<Setter Property="Content"
+																			Value="Open" />
+																</Style.Setters>
+															</Style>
+															<Style Selector="Button.NotInstalled">
+																<Style.Setters>
+																	<Setter Property="Content"
+																			Value="Download" />
+																</Style.Setters>
+															</Style>
+														</Button.Styles>
+													</Button>
+													<Button Content="Uninstall"
+															Height="32"
+															Width="100"
+															Margin="0,0,12,0"
+															FontSize="12"
+															Padding="0"
+															HorizontalContentAlignment="Center"
+															VerticalContentAlignment="Center"
+															VerticalAlignment="Center"
+															Command="{ReflectionBinding ElementName=PageSelf, Path=DataContext.InstallOrUninstallCommand}"
+															CommandParameter="{Binding .}"
+															Classes.Installed="{Binding Installed}"
+															Classes.NotInstalled="{Binding !Installed}">
+														<Button.Styles>
+															<Style Selector="Button.Installed">
+																<Style.Setters>
+																	<Setter Property="Background"
+																			Value="{StaticResource Danger}" />
+																</Style.Setters>
+															</Style>
+															<Style Selector="Button.NotInstalled">
+																<Style.Setters>
+																	<Setter Property="Background"
+																			Value="{StaticResource Accent}" />
+																</Style.Setters>
+															</Style>
+															<Style Selector="Button.Installed">
+																<Style.Setters>
+																	<Setter Property="Content"
+																			Value="Uninstall" />
+																</Style.Setters>
+															</Style>
+															<Style Selector="Button.NotInstalled">
+																<Style.Setters>
+																	<Setter Property="Content"
+																			Value="Install" />
+																</Style.Setters>
+															</Style>
+														</Button.Styles>
+													</Button>
+												</StackPanel>
+											</StackPanel>
+										</Border>
+
+										<!-- Release Info Card -->
+										<Border Background="{StaticResource Background}"
+												CornerRadius="8"
+												Padding="12">
+											<StackPanel Spacing="4">
+												<TextBlock Text="Release Notes"
+														   FontWeight="Bold" />
+												<hyper:Hyperlink x:Name="ReleaseNotesText"
+																 Alias="{Binding Data.ReleaseNotes}"
+																 TextWrapping="Wrap"
+																 HorizontalAlignment="Left"
+																 Url="{Binding Data.ReleaseNotes}" />
+												<TextBlock Text="Release Date"
+														   FontWeight="Bold"
+														   Margin="0,8,0,0" />
+												<TextBlock Text="{Binding Data.ReleaseDate}" />
+											</StackPanel>
+										</Border>
+
+										<!-- Language Versions Card -->
+										<Border Background="{StaticResource Background}"
+												CornerRadius="8"
+												Padding="12">
+											<StackPanel Spacing="4">
+												<TextBlock Text="Runtime Version"
+														   FontWeight="Bold" />
+												<TextBlock Text="{Binding SdkData.RuntimeVersion}" />
+												<TextBlock Text="C# Version"
+														   FontWeight="Bold"
+														   Margin="0,8,0,0" />
+												<TextBlock Text="{Binding SdkData.CsharpVersion}" />
+												<TextBlock Text="F# Version"
+														   FontWeight="Bold"
+														   Margin="0,8,0,0" />
+												<TextBlock Text="{Binding SdkData.FsharpVersion}" />
+												<TextBlock Text="VB Version"
+														   FontWeight="Bold"
+														   Margin="0,8,0,0" />
+												<TextBlock Text="{Binding SdkData.VbVersion}" />
+											</StackPanel>
+										</Border>
+
+										<!-- Visual Studio Support Card -->
+										<Border Background="{StaticResource Background}"
+												CornerRadius="8"
+												Padding="12">
+											<StackPanel Spacing="4">
+												<TextBlock Text="Visual Studio Support"
+														   FontWeight="Bold" />
+												<TextBlock Text="{Binding SdkData.VsSupport}" />
+												<TextBlock Text="{Binding SdkData.VsVersion}" />
+												<TextBlock Text="Visual Studio Mac Support"
+														   FontWeight="Bold"
+														   Margin="0,8,0,0" />
+												<TextBlock Text="{Binding SdkData.VsMacSupport}" />
+												<TextBlock Text="{Binding SdkData.VsMacVersion}" />
+											</StackPanel>
+										</Border>
+
+										<!-- Downloads Card -->
+										<Border Background="{StaticResource Background}"
+												CornerRadius="8"
+												Padding="12">
+											<StackPanel>
+												<TextBlock Text="Downloads"
+														   FontWeight="Bold"
+														   Margin="0,0,0,8" />
+												<ItemsControl ItemsSource="{Binding SdkData.Files}"
+															  HorizontalAlignment="Stretch"
+															  Background="Transparent">
+													<ItemsControl.ItemTemplate>
+														<DataTemplate x:DataType="data:FileInfo">
+															<Grid Height="50"
+																  ColumnDefinitions="60,*"
+																  Margin="0,8,8,8">
+																<Border Background="#5effffff"
+																		Grid.Column="0"
+																		Height="50"
+																		Width="50"
+																		HorizontalAlignment="Left"
+																		CornerRadius="25"
+																		Padding="2">
+																	<TextBlock VerticalAlignment="Center"
+																			   HorizontalAlignment="Center"
+																			   TextAlignment="Center"
+																			   Width="50"
+																			   FontSize="30"
+																			   Text="{Binding Rid, Converter={StaticResource RidToIconConverter}}" />
+																</Border>
+																<Border Grid.Column="0"
+																		BorderThickness="2"
+																		Height="22"
+																		Width="22"
+																		Margin="0,3,3,0"
+																		HorizontalAlignment="Right"
+																		VerticalAlignment="Bottom"
+																		CornerRadius="10">
+																	<Border.BorderBrush>
+																		<SolidColorBrush Color="{StaticResource Background}" />
+																	</Border.BorderBrush>
+																	<Border.Background>
+																		<SolidColorBrush Color="{Binding FileName, Converter={StaticResource FileNameToColorConverter}}" />
+																	</Border.Background>
+																	<TextBlock VerticalAlignment="Center"
+																			   HorizontalAlignment="Center"
+																			   TextAlignment="Center"
+																			   Width="20"
+																			   FontSize="12"
+																			   FontFamily="{StaticResource LucideIcons}"
+																			   Text="{Binding FileName, Converter={StaticResource FileNameToIconConverter}}" />
+																</Border>
+																<StackPanel Spacing="2"
+																			Margin="4,0,0,0"
+																			Grid.Column="1"
+																			VerticalAlignment="Center">
+																	<TextBlock VerticalAlignment="Center"
+																			   Text="{Binding Rid}" />
+																	<hyper:Hyperlink Alias="{Binding FileName}"
+																					 MaxLines="3"
+																					 TextWrapping="Wrap"
+																					 Url="{Binding Url}" />
+																</StackPanel>
+															</Grid>
+														</DataTemplate>
+													</ItemsControl.ItemTemplate>
+												</ItemsControl>
+											</StackPanel>
+										</Border>
 									</StackPanel>
 								</StackPanel>
 							</ScrollViewer>

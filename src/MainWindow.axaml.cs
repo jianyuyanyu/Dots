@@ -30,17 +30,17 @@ namespace Dots
 		protected override async void OnInitialized()
 		{
 			base.OnInitialized();
-			if (!await BlobCache.UserAccount.ContainsKey(Constants.LastCheckedKey))
+			if (!await CacheDatabase.UserAccount.ContainsKey(Constants.LastCheckedKey))
 			{
-				await BlobCache.UserAccount.InsertObject(Constants.LastCheckedKey, DateTime.Now);
+				await CacheDatabase.UserAccount.InsertObject(Constants.LastCheckedKey, DateTime.Now);
 			}
-			var lastChecked = await BlobCache.UserAccount.GetObject<DateTime>(Constants.LastCheckedKey);
+			var lastChecked = await CacheDatabase.UserAccount.GetObject<DateTime>(Constants.LastCheckedKey);
 
 			bool force = false;
 			if (DateTime.Now.Subtract(lastChecked).TotalDays > 10)
 			{
 				force = true;
-				await BlobCache.UserAccount.InsertObject(Constants.LastCheckedKey, DateTime.Now);
+				await CacheDatabase.UserAccount.InsertObject(Constants.LastCheckedKey, DateTime.Now);
 			}
 			await _vm.CheckSdks(force);
 		}

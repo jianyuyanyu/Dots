@@ -12,21 +12,21 @@ env:
 
 jobs:
   build-macos:
-    runs-on: macos-14
+    runs-on: macos-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4.1.1
     - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3.2.0
+      uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '10.0.x'
     - name: restore workloads
       run: |
         cd $GITHUB_WORKSPACE/src
         dotnet workload restore
     - name: run housekeeping scripts
       run: |
-        sudo xcode-select -s /Applications/Xcode_16.2.app
+        sudo xcode-select -s /Applications/Xcode_26.2.app
         cd $GITHUB_WORKSPACE/scripts
         bash housekeeping.sh
     - name: Install the Apple certificate and provisioning profile
@@ -65,11 +65,11 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: macosx64file
-        path: ${{ github.workspace }}/src/bin/Release/net8.0-macos/osx-x64/publish/*.zip
+        path: ${{ github.workspace }}/src/bin/Release/net10.0-macos/osx-x64/publish/*.zip
     - uses: actions/upload-artifact@v4
       with:
         name: macosarm64file
-        path: ${{ github.workspace }}/src/bin/Release/net8.0-macos/osx-arm64/publish/*.zip
+        path: ${{ github.workspace }}/src/bin/Release/net10.0-macos/osx-arm64/publish/*.zip
 
   build-windows:
     runs-on: windows-latest
@@ -77,9 +77,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4.1.1
     - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3.2.0
+      uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '10.0.x'
     - name: restore workloads
       shell: bash
       run: |
@@ -160,6 +160,20 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: false
           custom_tag: ${{ steps.get_version.outputs.CURRENT_VERSION }}
+      - name: Install DiffLog
+        run: dotnet tool install -g DiffLog
+      - name: Generate Release Notes
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPEN_AI_API_KEY }}
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          CURRENT_TAG=${{ steps.tag_version.outputs.new_tag }}
+
+          if [ -n "$PREV_TAG" ]; then
+            difflog generate --from "$PREV_TAG" --to "$CURRENT_TAG" --format Markdown -o release-notes.md --system-prompt "Generate developer friendly release notes based on this git history information. Include SHA hashes and structure the changelog in bullet points. don't make it too long and don't overcomplicate it. keep it clean (subtle emoji usage is allowed)."
+          else
+            difflog generate --to "$CURRENT_TAG" --format Markdown -o release-notes.md --system-prompt "Generate developer friendly release notes based on this git history information. Include SHA hashes and structure the changelog in bullet points. don't make it too long and don't overcomplicate it. keep it clean (subtle emoji usage is allowed)."
+          fi
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
@@ -168,5 +182,6 @@ jobs:
             artifacts: |
               $GITHUB_WORKSPACE/*.zip
             token: ${{ secrets.GITHUB_TOKEN }}
-            generateReleaseNotes: true
+            bodyFile: release-notes.md
+            generateReleaseNotes: false
             draft: true

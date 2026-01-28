@@ -14,21 +14,21 @@ env:
 
 jobs:
   build-macos:
-    runs-on: macos-14
+    runs-on: macos-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4.1.1
     - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3.2.0
+      uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '10.0.x'
     - name: restore workloads
       run: |
         cd $GITHUB_WORKSPACE/src
         dotnet workload restore
     - name: run housekeeping scripts
       run: |
-        sudo xcode-select -s /Applications/Xcode_16.2.app
+        sudo xcode-select -s /Applications/Xcode_26.2.app
         cd $GITHUB_WORKSPACE/scripts
         bash housekeeping.sh
     - name: Install the Apple certificate and provisioning profile
@@ -67,11 +67,11 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: macosx64file
-        path: ${{ github.workspace }}/src/bin/Release/net8.0-macos/osx-x64/publish/*.zip
+        path: ${{ github.workspace }}/src/bin/Release/net10.0-macos/osx-x64/publish/*.zip
     - uses: actions/upload-artifact@v4
       with:
         name: macosarm64file
-        path: ${{ github.workspace }}/src/bin/Release/net8.0-macos/osx-arm64/publish/*.zip
+        path: ${{ github.workspace }}/src/bin/Release/net10.0-macos/osx-arm64/publish/*.zip
 
   build-windows:
     runs-on: windows-latest
