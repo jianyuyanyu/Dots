@@ -160,6 +160,20 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: false
           custom_tag: ${{ steps.get_version.outputs.CURRENT_VERSION }}
+      - name: Install DiffLog
+        run: dotnet tool install -g DiffLog
+      - name: Generate Release Notes
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPEN_AI_API_KEY }}
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          CURRENT_TAG=${{ steps.tag_version.outputs.new_tag }}
+
+          if [ -n "$PREV_TAG" ]; then
+            difflog generate --from "$PREV_TAG" --to "$CURRENT_TAG" --format Markdown -o release-notes.md --system-prompt "Generate developer friendly release notes based on this git history information. Include SHA hashes and structure the changelog in bullet points. don't make it too long. keep it clean."
+          else
+            difflog generate --to "$CURRENT_TAG" --format Markdown -o release-notes.md --system-prompt "Generate developer friendly release notes based on this git history information. Include SHA hashes and structure the changelog in bullet points. don't make it too long. keep it clean."
+          fi
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
@@ -168,5 +182,6 @@ jobs:
             artifacts: |
               $GITHUB_WORKSPACE/*.zip
             token: ${{ secrets.GITHUB_TOKEN }}
-            generateReleaseNotes: true
+            bodyFile: release-notes.md
+            generateReleaseNotes: false
             draft: true
