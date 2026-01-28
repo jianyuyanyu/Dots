@@ -117,6 +117,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+          fetch-tags: true
       - name: Get Version via powershell
         shell: pwsh
         id: get_version
@@ -167,12 +170,12 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPEN_AI_API_KEY }}
         run: |
           PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
-          CURRENT_TAG=${{ steps.tag_version.outputs.new_tag }}
+          CURRENT_REF=HEAD
 
           if [ -n "$PREV_TAG" ]; then
-            difflog generate --from "$PREV_TAG" --to "$CURRENT_TAG" --format Markdown -o release-notes.md --system-prompt "Generate developer friendly release notes based on this git history information. Include SHA hashes and structure the changelog in bullet points. don't make it too long and don't overcomplicate it. keep it clean (subtle emoji usage is allowed)."
+            difflog generate --from "$PREV_TAG" --to "$CURRENT_REF" --format Markdown -o release-notes.md --system-prompt "Generate developer friendly release notes based on this git history information. Include SHA hashes and structure the changelog in bullet points. don't make it too long and don't overcomplicate it. keep it clean (subtle emoji usage is allowed)."
           else
-            difflog generate --to "$CURRENT_TAG" --format Markdown -o release-notes.md --system-prompt "Generate developer friendly release notes based on this git history information. Include SHA hashes and structure the changelog in bullet points. don't make it too long and don't overcomplicate it. keep it clean (subtle emoji usage is allowed)."
+            difflog generate --to "$CURRENT_REF" --format Markdown -o release-notes.md --system-prompt "Generate developer friendly release notes based on this git history information. Include SHA hashes and structure the changelog in bullet points. don't make it too long and don't overcomplicate it. keep it clean (subtle emoji usage is allowed)."
           fi
       - name: Create Release
         uses: ncipollo/release-action@v1
