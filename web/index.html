@@ -1,258 +1,284 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>DOTS - the friendly .NET SDK manager</title>
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/dots.min.css">
+	<title>Dots — the friendly .NET SDK manager</title>
+	<meta name="description"
+		content="Dots is a clean, simple and easy-to-use .NET SDK manager for Windows, macOS and Linux. Free and open-source.">
+	<meta name="theme-color" content="#f1efea" media="(prefers-color-scheme: light)">
+	<meta name="theme-color" content="#08080b" media="(prefers-color-scheme: dark)">
+	<meta property="og:title" content="Dots — the friendly .NET SDK manager">
+	<meta property="og:description"
+		content="Discover, update, clean up and inspect your .NET SDKs. Free and open-source.">
+	<meta property="og:image" content="img/screenshot.png">
+	<meta property="og:type" content="website">
+	<link rel="stylesheet" href="css/dots.css">
 	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 	<link rel="manifest" href="site.webmanifest">
+	<script>
+		// set the theme before first paint to avoid a flash
+		(function () {
+			var d = document.documentElement;
+			d.classList.remove('no-js');
+			d.classList.add('js');
+			try {
+				var s = localStorage.getItem('dots-theme');
+				d.dataset.theme = s || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+			} catch (e) { d.dataset.theme = 'light'; }
+		})();
+	</script>
 </head>
 
-<body class="is-boxed has-animations">
-	<div class="body-wrap boxed-container">
-		<header class="site-header">
-			<div class="container">
-				<div class="site-header-inner">
-					<div class="brand header-brand">
-						<h1 class="m-0">
-						</h1>
+<body>
+	<canvas id="dotfield" class="dotfield" aria-hidden="true"></canvas>
+	<div class="aura" aria-hidden="true"></div>
+
+	<a class="skip" href="#main">Skip to content</a>
+
+	<header class="topbar" id="topbar">
+		<div class="shell topbar-inner">
+			<a class="brand" href="#top" aria-label="Dots — home">
+				<span class="brand-chip">
+					<img src="img/icon.png" alt="" width="40" height="40">
+				</span>
+				<span class="brand-name">Dots</span>
+			</a>
+
+			<nav class="topnav" aria-label="Primary">
+				<a href="#features"><span class="lead-dot"></span>Features</a>
+				<a href="#open-source"><span class="lead-dot"></span>Open&nbsp;Source</a>
+				<a href="https://github.com/nor0x/dots"><span class="lead-dot"></span>GitHub</a>
+			</nav>
+
+			<div class="topbar-actions">
+				<button class="switch" id="theme-toggle" type="button" role="switch" aria-checked="false"
+					aria-label="Toggle dark mode">
+					<span class="switch-track" aria-hidden="true">
+						<span class="switch-knob"></span>
+					</span>
+				</button>
+				<a class="btn btn-ghost btn-sm topbar-cta" href="https://github.com/nor0x/dots/releases/latest">
+					Download
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<main id="main">
+		<section class="hero" id="top">
+			<div class="shell">
+				<p class="pill reveal">
+					<span class="pill-dot"></span>
+					free &amp; open&#8209;source · windows · macos · linux
+				</p>
+
+				<h1 class="wordmark reveal" aria-label="Dots">
+					<span class="dm-word" data-word="DOTS" aria-hidden="true"></span>
+					<span class="wordmark-fallback" aria-hidden="true">DoTS</span>
+				</h1>
+
+				<p class="tagline reveal">the friendly <span class="tag-strong">.NET SDK</span> manager</p>
+
+				<p class="lede reveal">
+					A clean, simple and easy-to-use .NET SDK manager for Windows, macOS and Linux.
+					Always <em>free</em> and <em>open&#8209;source</em>.
+				</p>
+
+				<div class="cta reveal">
+					<a class="btn btn-solid" href="https://github.com/nor0x/dots/releases/latest">
+						<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+						</svg>
+						Download latest
+					</a>
+					<a class="btn btn-ghost" href="https://github.com/nor0x/dots">
+						<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+							<path
+								d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+							<path d="M9 18c-4.51 2-5-2-7-2" />
+						</svg>
+						View source
+					</a>
+				</div>
+			</div>
+
+			<div class="shell showcase reveal">
+				<div class="screen" id="screen">
+					<img class="mascot" src="img/logo.png" alt="" width="886" height="717" aria-hidden="true"
+						decoding="async">
+					<div class="screen-frame">
+						<div class="screen-bar">
+							<span class="lights"><i></i><i></i><i></i></span>
+							<span class="screen-title">dots</span>
+						</div>
+						<div class="screen-body">
+							<img src="img/screenshot.png" alt="The Dots app listing installed and available .NET SDKs"
+								width="2303" height="1371" decoding="async" fetchpriority="high">
+						</div>
+					</div>
+					<span class="orbit orbit-a" aria-hidden="true"></span>
+					<span class="orbit orbit-b" aria-hidden="true"></span>
+					<span class="orbit orbit-c" aria-hidden="true"></span>
+				</div>
+			</div>
+		</section>
+
+		<div class="ticker" aria-hidden="true">
+			<div class="ticker-run">
+				<span>discover<i></i>update<i></i>cleanup<i></i>metadata<i></i>discover<i></i>update<i></i>cleanup<i></i>metadata<i></i></span>
+				<span>discover<i></i>update<i></i>cleanup<i></i>metadata<i></i>discover<i></i>update<i></i>cleanup<i></i>metadata<i></i></span>
+			</div>
+		</div>
+
+		<section class="features" id="features">
+			<div class="shell">
+				<header class="sec-head reveal">
+					<p class="eyebrow"><span class="pill-dot"></span>what it does</p>
+					<h2 class="sec-title">Four dots, no friction</h2>
+				</header>
+
+				<div class="grid">
+					<article class="card reveal">
+						<span class="card-index" aria-hidden="true">01</span>
+						<span class="card-icon">
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path
+									d="M15.594,4.478L5.857,7.679L5.842,7.684L5.832,7.688L2.605,8.749C1.6,9.095 1.017,10.163 1.268,11.196L1.806,13.348C2.049,14.364 3.075,15.01 4.097,14.788L7.455,14.072C7.472,14.069 7.488,14.065 7.505,14.061L9.088,13.724C9.217,14.243 9.481,14.709 9.841,15.082L7.106,20.553C6.859,21.046 7.059,21.648 7.553,21.894C8.046,22.141 8.648,21.941 8.894,21.447L11.629,15.977C11.751,15.992 11.874,16 12,16C12.126,16 12.249,15.992 12.371,15.977L15.106,21.447C15.352,21.941 15.954,22.141 16.447,21.894C16.941,21.648 17.141,21.046 16.894,20.553L14.159,15.082C14.68,14.542 15,13.808 15,13C15,12.82 14.984,12.644 14.954,12.472L17.583,11.912C18.291,12.476 19.244,12.72 20.182,12.485L21.273,12.213C22.337,11.946 22.994,10.851 22.727,9.787L21.212,3.727C20.945,2.663 19.852,2.007 18.788,2.273L17.697,2.545C16.684,2.798 15.917,3.553 15.594,4.478ZM12,12C12.552,12 13,12.448 13,13C13,13.552 12.552,14 12,14C11.448,14 11,13.552 11,13C11,12.448 11.448,12 12,12ZM5.449,9.919C4.133,10.352 3.249,10.643 3.247,10.644C3.219,10.659 3.204,10.691 3.211,10.722L3.735,12.82L6.051,12.327L5.449,9.919ZM15.613,6.577C13.812,7.169 10.208,8.354 7.354,9.293L8.008,11.909L9.333,11.627C9.831,10.661 10.839,10 12,10C12.708,10 13.36,10.246 13.874,10.658L16.494,10.099L15.613,6.577ZM20.787,10.273L19.698,10.545C19.166,10.678 18.618,10.349 18.485,9.817L17.455,5.698C17.322,5.165 17.651,4.618 18.183,4.485C18.183,4.485 19.272,4.213 19.272,4.213C18.74,4.346 19.405,4.745 19.272,4.213L20.787,10.273Z" />
+							</svg>
+						</span>
+						<h3>Discover</h3>
+						<p>Browse and install .NET SDKs with ease. No more manual downloads and installations.</p>
+					</article>
+
+					<article class="card reveal">
+						<span class="card-index" aria-hidden="true">02</span>
+						<span class="card-icon">
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path
+									d="M8.308,22.362C11.05,23.339 14.071,23.188 16.703,21.944C17.201,21.708 17.415,21.111 17.179,20.612C16.943,20.114 16.346,19.9 15.847,20.136C13.695,21.154 11.223,21.277 8.98,20.478C8.46,20.293 7.887,20.565 7.702,21.084C7.517,21.604 7.789,22.177 8.308,22.362ZM1.913,16.399C2.531,17.82 3.441,19.094 4.586,20.139C4.994,20.511 5.627,20.482 5.999,20.074C6.371,19.666 6.342,19.033 5.934,18.661C4.998,17.807 4.252,16.764 3.747,15.601C3.527,15.095 2.938,14.863 2.431,15.083C1.925,15.303 1.693,15.892 1.913,16.399ZM12,3C12.001,3 12.001,3 12.002,3C16.939,3 21.002,7.063 21.002,12C21.002,14.248 20.16,16.416 18.642,18.075C18.27,18.482 18.298,19.115 18.705,19.488C19.112,19.86 19.745,19.832 20.118,19.425C21.972,17.398 23.002,14.748 23.002,12C23.002,5.966 18.036,1 12.002,1C12.001,1 12,1 12,1C11.448,1 11,1.448 11,2C11,2.552 11.448,3 12,3ZM12,7L11.976,7C11.884,7.002 11.795,7.017 11.711,7.042L11.708,7.043C11.556,7.09 11.413,7.173 11.293,7.293L7.293,11.293C6.903,11.683 6.903,12.317 7.293,12.707C7.683,13.097 8.317,13.097 8.707,12.707L11,10.414L11,16C11,16.552 11.448,17 12,17C12.552,17 13,16.552 13,16L13,10.414L15.293,12.707C15.683,13.097 16.317,13.097 16.707,12.707C17.097,12.317 17.097,11.683 16.707,11.293L12.707,7.293C12.587,7.173 12.444,7.09 12.292,7.043L12.289,7.042C12.205,7.017 12.116,7.002 12.024,7L12,7ZM1.55,8.563C1.2,9.628 1.014,10.741 1,11.863C0.993,12.414 1.436,12.868 1.988,12.875C2.539,12.882 2.993,12.439 3,11.887C3.011,10.97 3.163,10.059 3.45,9.187C3.622,8.663 3.337,8.098 2.812,7.925C2.288,7.753 1.723,8.038 1.55,8.563ZM5.372,5.911C5.624,5.638 5.891,5.381 6.174,5.14C6.595,4.783 6.646,4.151 6.289,3.731C5.932,3.31 5.3,3.259 4.88,3.616C4.534,3.91 4.206,4.224 3.9,4.559C3.526,4.965 3.553,5.598 3.96,5.971C4.366,6.345 4.999,6.318 5.372,5.911Z" />
+							</svg>
+						</span>
+						<h3>Update</h3>
+						<p>One-click updates to automatically bump to the latest SDK versions for all channels.</p>
+					</article>
+
+					<article class="card reveal">
+						<span class="card-index" aria-hidden="true">03</span>
+						<span class="card-icon">
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path
+									d="M7,5L3,5C2.448,5 2,5.448 2,6C2,6.552 2.448,7 3,7L4,7L4,20C4,20.753 4.353,21.517 4.918,22.082C5.483,22.647 6.247,23 7,23L17,23C17.753,23 18.517,22.647 19.082,22.082C19.647,21.517 20,20.753 20,20L20,7L21,7C21.552,7 22,6.552 22,6C22,5.448 21.552,5 21,5L17,5L17,4C17,3.247 16.647,2.483 16.082,1.918C15.517,1.353 14.753,1 14,1L10,1C9.247,1 8.483,1.353 7.918,1.918C7.353,2.483 7,3.247 7,4L7,5ZM18,7L6,7L6,20C6,20.247 6.147,20.483 6.332,20.668C6.517,20.853 6.753,21 7,21C7,21 17,21 17,21C17.247,21 17.483,20.853 17.668,20.668C17.853,20.483 18,20.247 18,20L18,7ZM13,11L13,17C13,17.552 13.448,18 14,18C14.552,18 15,17.552 15,17L15,11C15,10.448 14.552,10 14,10C13.448,10 13,10.448 13,11ZM9,11L9,17C9,17.552 9.448,18 10,18C10.552,18 11,17.552 11,17L11,11C11,10.448 10.552,10 10,10C9.448,10 9,10.448 9,11ZM15,5L15,4C15,3.753 14.853,3.517 14.668,3.332C14.483,3.147 14.247,3 14,3C14,3 10,3 10,3C9.753,3 9.517,3.147 9.332,3.332C9.147,3.517 9,3.753 9,4L9,5L15,5Z" />
+							</svg>
+						</span>
+						<h3>Cleanup</h3>
+						<p>Remove and uninstall old SDKs and their associated files with a single click. Keep your
+							system clean.</p>
+					</article>
+
+					<article class="card reveal">
+						<span class="card-index" aria-hidden="true">04</span>
+						<span class="card-icon">
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path
+									d="M10.997,20.898L11,21C11,21.552 11.448,22 12,22C12.552,22 13,21.552 13,21C13,19.903 13.903,19 15,19L21,19C22.097,19 23,18.097 23,17L23,4C23,2.903 22.097,2 21,2L16,2C14.372,2 12.915,2.795 12,4.015C11.085,2.795 9.628,2 8,2L3,2C1.903,2 1,2.903 1,4L1,17C1,18.097 1.903,19 3,19L9,19C10.063,19 10.943,19.847 10.997,20.898ZM11,7L11,17.542C10.41,17.198 9.726,17 9,17L3,17L3,4C3,4 8,4 8,4C9.646,4 11,5.354 11,7ZM13,17.542L13,7L13.001,6.923C13.042,5.312 14.38,4 16,4C16,4 21,4 21,4C20.451,4 21,4.549 21,4L21,17C21,17 15,17 15,17C14.274,17 13.59,17.198 13,17.542ZM16,13L18,13C18.552,13 19,12.552 19,12C19,11.448 18.552,11 18,11L16,11C15.448,11 15,11.448 15,12C15,12.552 15.448,13 16,13ZM6,13L8,13C8.552,13 9,12.552 9,12C9,11.448 8.552,11 8,11L6,11C5.448,11 5,11.448 5,12C5,12.552 5.448,13 6,13ZM16,9L18,9C18.552,9 19,8.552 19,8C19,7.448 18.552,7 18,7L16,7C15.448,7 15,7.448 15,8C15,8.552 15.448,9 16,9ZM6,9L8,9C8.552,9 9,8.552 9,8C9,7.448 8.552,7 8,7L6,7C5.448,7 5,7.448 5,8C5,8.552 5.448,9 6,9Z" />
+							</svg>
+						</span>
+						<h3>Metadata</h3>
+						<p>Quickly view detailed information about installed SDKs, including version, release date,
+							notes, and more.</p>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section class="oss" id="open-source">
+			<div class="shell">
+				<div class="panel reveal">
+					<div class="panel-dots" aria-hidden="true"></div>
+					<div class="panel-content">
+						<p class="eyebrow"><span class="pill-dot"></span>built in the open</p>
+						<h2 class="sec-title">Open Source</h2>
+						<p class="panel-text">
+							Dots is developed in the open and is available on GitHub. Contribute to the project,
+							report issues, or request new features. We'd love to hear from you!
+						</p>
+						<div class="cta">
+							<a class="btn btn-solid" href="https://github.com/nor0x/dots">
+								<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+									<path
+										d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+									<path d="M9 18c-4.51 2-5-2-7-2" />
+								</svg>
+								View on GitHub
+							</a>
+							<a class="btn btn-ghost" href="https://bento.me/nor0x">
+								<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+									<path d="M10 2v2" />
+									<path d="M14 2v2" />
+									<path
+										d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" />
+									<path d="M6 2v2" />
+								</svg>
+								Buy me a coffee
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
-		</header>
+		</section>
+	</main>
 
-		<main>
-			<section class="hero text-center">
-				<div class="container-sm">
-					<div class="hero-inner">
-						<img src="img/logo.png" class="logo-img" />
-
-						<h1 class="hero-title h2-mobile mt-0 is-revealing"><span class="font-dotted">DoTS</span></h1>
-						<p class="hero-paragraph is-revealing">- the
-							friendly .NET SDK manager</p>
-						<div class="hero-form newsletter-form field field-grouped is-revealing">
-							<a href="https://github.com/nor0x/dots/releases/latest">
-								<img src="img/download-badge.png" class="download-img" />
-							</a>
-						</div>
-						<div class="hero-browser">
-							<div class="bubble-3 is-revealing">
-								<svg width="427" height="386" viewBox="0 0 427 336" xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink">
-									<defs>
-										<linearGradient id="svg_10" x1="0.86328" y1="0.23905" x2="0.26172" y2="0.71952"
-											spreadMethod="pad">
-											<stop stop-color="#1274ed" stop-opacity="0.98438" offset="0.01953" />
-											<stop stop-color="#75abf3" stop-opacity="0.98438" offset="0.99609" />
-										</linearGradient>
-									</defs>
-									<g>
-										<ellipse transform="rotate(10.2965 174.835 184.343)" stroke="null"
-											fill="url(#svg_10)" cx="174.835" cy="184.34318" id="svg_1" rx="155.50001"
-											ry="168.3432" />
-									</g>
-								</svg>
-							</div>
-							<div class="bubble-4 is-revealing">
-								<svg width="230" height="255" viewBox="0 0 230 255" xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink">
-									<defs>
-										<linearGradient id="svg_5" x1="0.9" y1="1.2" x2="0.92578" y2="0.97734"
-											spreadMethod="pad">
-											<stop stop-color="#b1f1ea" stop-opacity="0.99219" offset="0" />
-											<stop stop-color="#3bddcc" stop-opacity="0.99219" offset="0.99609" />
-										</linearGradient>
-									</defs>
-									<g>
-										<ellipse stroke="null" fill="url(#svg_5)" cx="103.83499" cy="128.84318"
-											id="svg_1" rx="101.5" ry="126.8432" />
-									</g>
-								</svg>
-							</div>
-							<div class="bubble-1 is-revealing">
-								<svg width="120" height="70" viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink">
-									<defs>
-										<linearGradient id="svg_8" x1="0.76172" y1="0.76249" x2="0.30078" y2="0.07109"
-											spreadMethod="pad">
-											<stop stop-color="#ff4f73" stop-opacity="0.98828" offset="0" />
-											<stop stop-color="#ffa3b5" stop-opacity="0.98828" offset="0.99609" />
-										</linearGradient>
-									</defs>
-									<g>
-										<ellipse stroke="null" fill="url(#svg_8)" cx="103.83499" cy="63.84318"
-											id="svg_1" rx="101.5" ry="61.8432" />
-									</g>
-								</svg>
-							</div>
-							<div class="bubble-2 is-revealing">
-								<svg width="179" height="179" viewBox="0 0 179 179" xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink">
-									<defs>
-										<linearGradient id="svg_3" x1="0" y1="0" x2="1" y2="0" spreadMethod="pad">
-											<stop stop-color="#b1b6f1" stop-opacity="0.99609" offset="0" />
-											<stop stop-color="#626cd5" stop-opacity="0.99609" offset="0.99609" />
-										</linearGradient>
-									</defs>
-									<g>
-										<ellipse fill="url(#svg_3)" cx="79.83499" cy="74.91418" id="svg_1" rx="77.5"
-											ry="72.9142" stroke="null" />
-									</g>
-								</svg>
-
-							</div>
-							<div class="hero-browser-inner is-revealing">
-								<img src="img/screenshot.png" alt="Dots screenshot">
-								<p class="hero-subparagraph">
-									a clean, simple and easy-to-use .NET SDK manager for Windows, macOS and Linux.
-									Always<span class="bold"> free</span> and <span
-										class="bold">open-source</span>.
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="features section text-center">
-				<div class="container">
-					<div class="features-inner section-inner has-bottom-divider">
-						<div class="features-wrap">
-							<div class="feature is-revealing">
-								<div class="feature-inner">
-									<div class="feature-icon">
-										<img src="img/telescope.svg" />
-									</div>
-									<h3 class="feature-title">Discover</h3>
-									<p class="text-sm">
-										Browse and install .NET SDKs with ease. No more manual downloads and
-										installations.
-									</p>
-								</div>
-							</div>
-							<div class="feature is-revealing">
-								<div class="feature-inner">
-									<div class="feature-icon">
-										<img src="img/circle-fading-arrow-up.svg" />
-
-									</div>
-									<h3 class="feature-title">Update</h3>
-									<p class="text-sm">
-										One-click updates to automatically bump to the latest SDK versions for all
-										channels.
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="features-wrap">
-							<div class="feature is-revealing">
-								<div class="feature-inner">
-									<div class="feature-icon">
-										<img src="img/trash-2.svg" />
-									</div>
-									<h3 class="feature-title">Cleanup</h3>
-									<p class="text-sm">
-										Remove and uninstall old SDKs and their associated files with a single click.
-										Keep your system clean.
-									</p>
-								</div>
-							</div>
-							<div class="feature is-revealing">
-								<div class="feature-inner">
-									<div class="feature-icon">
-										<img src="img/book-open-text.svg" />
-
-									</div>
-									<h3 class="feature-title">
-										Metadata
-									</h3>
-									<p class="text-sm">
-										Quickly view detailed information about installed SDKs, including version,
-										release date notes, and more.
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="newsletter section">
-				<div class="container-sm">
-					<div class="newsletter-inner section-inner">
-						<div class="newsletter-header text-center is-revealing">
-							<h2 class="section-title mt-0">
-								Open Source
-							</h2>
-							<p class="section-paragraph">
-								Dots is developed in the open and is available on GitHub. Contribute to the project,
-								report issues, or request new features. We'd love to hear from you!
-							</p>
-						</div>
-						<div class="footer-form newsletter-form field field-grouped is-revealing">
-							<div class="control">
-								<a class="button button-main button-block button-shadow" href="https://bento.me/nor0x">
-									Buy me a coffee
-								</a>
-							</div>
-							<div class="control">
-								<a class="button button-dark button-block button-shadow"
-									href="https://github.com/nor0x/dots">
-									View on GitHub
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</main>
-
-		<footer class="site-footer text-light">
-			<div class="container">
-				<div class="site-footer-inner">
-					<div class="brand footer-brand">
-						<img src="img/icon.png" class="footer-icon" alt="Dots logo" />
-					</div>
-					<ul class="footer-links list-reset">
-					</ul>
-					<ul class="footer-social-links list-reset">
-						<li>
-							<a href="https://github.com/nor0x/dots">
-								<img src="img/github.svg" />
-							</a>
-						</li>
-						<li>
-							<a href="https://x.com/h3y_studio">
-								<img src="img/twitter.svg" />
-							</a>
-						</li>
-						<li>
-							<a href="https://bento.me/nor0x">
-								<img src="img/coffee.svg" />
-							</a>
-						</li>
-					</ul>
-					<div class="footer-copyright">&copy;&nbsp;<span id="year"></span>&nbsp;by&nbsp;
-						<a href="https://h3y.studio">H3Y.studio</a>&nbsp;-&nbsp;made with&nbsp;☕&nbsp;and&nbsp;❤️&nbsp;
-						in Vienna
-						🇦🇹 🇪🇺
-					</div>
-				</div>
+	<footer class="site-footer">
+		<div class="shell footer-inner">
+			<div class="footer-brand">
+				<img src="img/icon.png" alt="Dots logo" width="52" height="52">
+				<span class="dm-small">dots</span>
 			</div>
-		</footer>
-	</div>
+
+			<ul class="socials">
+				<li>
+					<a href="https://github.com/nor0x/dots" aria-label="GitHub">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path
+								d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+							<path d="M9 18c-4.51 2-5-2-7-2" />
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://x.com/h3y_studio" aria-label="X">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path
+								d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://bento.me/nor0x" aria-label="Buy me a coffee">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M10 2v2" />
+							<path d="M14 2v2" />
+							<path
+								d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" />
+							<path d="M6 2v2" />
+						</svg>
+					</a>
+				</li>
+			</ul>
+
+			<p class="copyright">
+				&copy;&nbsp;<span id="year">2026</span>&nbsp;by&nbsp;<a href="https://h3y.studio">H3Y.studio</a>
+				<span class="sep" aria-hidden="true"></span>
+				made with&nbsp;☕&nbsp;and&nbsp;❤️&nbsp;in Vienna 🇦🇹 🇪🇺
+			</p>
+		</div>
+	</footer>
+
 	<script src="js/main.js"></script>
-	<script src="js/scrollreveal.min.js"></script>
-	<script src="js/main.min.js"></script>
-	<script src="js/dots.min.js"></script>
-
-
 </body>
 
 </html>
