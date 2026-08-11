@@ -32,6 +32,47 @@
     <Setter Property="Foreground" Value="{StaticResource SubtleForegroundBrush}" />
   </Style>
 
+  <!--
+    Every surface in Dots is dark whichever theme variant the system reports, but
+    Fluent still resolves TextBox and ToolTip colors from that variant. Under a
+    light system theme the typed search text came out near-black on the dark
+    search well, and the tooltip plate came out light grey behind the white
+    foreground the TextBlock rule above gives its content. Both are pinned to the
+    dark palette so the app renders the same either way.
+
+    The state selectors are not redundant - Fluent's control theme re-sets
+    Foreground on :pointerover and :focus, and a state setter outranks a plain
+    one no matter which style declared it.
+  -->
+  <Style Selector="TextBox">
+    <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+    <Setter Property="CaretBrush" Value="{StaticResource ForegroundBrush}" />
+    <Setter Property="SelectionBrush" Value="{StaticResource AccentBrush}" />
+    <Setter Property="SelectionForegroundBrush" Value="{StaticResource ForegroundBrush}" />
+  </Style>
+
+  <Style Selector="TextBox:pointerover">
+    <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+  </Style>
+
+  <Style Selector="TextBox:focus">
+    <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+  </Style>
+
+  <!-- the watermark carries its own placeholder brush, so the rule above misses it -->
+  <Style Selector="TextBox /template/ TextBlock#PART_Watermark">
+    <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+
+  <Style Selector="ToolTip">
+    <Setter Property="Background" Value="{StaticResource BackgroundDarkerBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource NeutralBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+  </Style>
+
   <Style Selector="Border.Card">
     <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
     <Setter Property="CornerRadius" Value="8" />

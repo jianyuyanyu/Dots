@@ -59,6 +59,7 @@
     <SolidColorBrush x:Key="BackgroundDarkerBrush"  Color="{StaticResource BackgroundDarker}" />
     <SolidColorBrush x:Key="BackgroundSubtleBrush"  Color="{StaticResource BackgroundSubtle}" />
     <SolidColorBrush x:Key="NeutralBrush"           Color="{StaticResource Neutral}" />
+    <SolidColorBrush x:Key="ForegroundBrush"        Color="{StaticResource Foreground}" />
     <SolidColorBrush x:Key="SubtleForegroundBrush"  Color="{StaticResource SubtleForeground}" />
 
     <!-- depth primitives -->
