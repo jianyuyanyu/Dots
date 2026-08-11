@@ -594,6 +594,11 @@ ul {
 	color: var(--accent);
 }
 
+.tag-emoji {
+	transform: rotate(9deg);
+	display: inline-block;
+}
+
 .tag-strong::after {
 	content: "";
 	position: absolute;
@@ -692,6 +697,7 @@ ul {
 	letter-spacing: .12em;
 	color: var(--muted);
 	padding-top: .2em;
+	display: none;
 }
 
 .screen-body {
@@ -825,6 +831,7 @@ ul {
 /* ---------- sections ----------------------------------- */
 
 .features,
+.download,
 .oss {
 	padding: clamp(3.5rem, 9vw, 6.5rem) 0;
 }
@@ -832,6 +839,34 @@ ul {
 .sec-head {
 	max-width: 34ch;
 	margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.sec-head-center {
+	max-width: 42ch;
+	margin-inline: auto;
+	text-align: center;
+}
+
+.sec-sub {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: .55rem;
+	margin-top: .9rem;
+	font-size: .95rem;
+	color: var(--muted);
+}
+
+.tag {
+	font-family: "LED Dot Matrix", monospace;
+	font-size: .95rem;
+	letter-spacing: .1em;
+	padding: .2em .7em 0;
+	border-radius: 999px;
+	color: var(--accent);
+	border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+	background: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 .eyebrow {
@@ -948,6 +983,192 @@ ul {
 	margin-top: .45rem;
 	font-size: .95rem;
 	color: var(--muted);
+}
+
+/* ---------- download ----------------------------------- */
+
+.dl-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+	gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+.dl-card {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	padding: 1.7rem 1.5rem 1.5rem;
+	border-radius: var(--radius);
+	border: 1px solid var(--line);
+	background: linear-gradient(170deg, var(--surface), var(--surface-2));
+	box-shadow: var(--lift-1), var(--bevel);
+	transition: transform .45s var(--ease), box-shadow .45s var(--ease),
+		border-color .45s var(--ease);
+}
+
+/* dot texture along the floor of the card */
+.dl-card::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: radial-gradient(circle at 1.5px 1.5px, rgba(var(--dot-rgb), .18) 1.2px, transparent 1.3px) 0 0/12px 12px;
+	mask-image: radial-gradient(120% 80% at 0% 100%, #000, transparent 60%);
+	-webkit-mask-image: radial-gradient(120% 80% at 0% 100%, #000, transparent 60%);
+	opacity: .5;
+	transition: opacity .45s var(--ease), background .45s var(--ease);
+}
+
+.dl-card:hover {
+	transform: translateY(-4px);
+	border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+	box-shadow: var(--lift-2), var(--bevel);
+}
+
+.dl-card:hover::before {
+	opacity: 1;
+	background: radial-gradient(circle at 1.5px 1.5px, rgba(var(--accent-rgb), .5) 1.3px, transparent 1.4px) 0 0/12px 12px;
+}
+
+.dl-icon {
+	display: grid;
+	place-items: center;
+	width: 58px;
+	height: 58px;
+	border-radius: 20px;
+	color: var(--ink);
+	background: linear-gradient(160deg, var(--surface-2), var(--surface));
+	border: 1px solid var(--line);
+	box-shadow: var(--bevel), var(--lift-1);
+	transition: transform .5s var(--ease-back), color .35s var(--ease),
+		box-shadow .4s var(--ease);
+}
+
+.dl-icon svg {
+	width: 27px;
+	height: 27px;
+	fill: currentColor;
+}
+
+.dl-card:hover .dl-icon {
+	transform: translateY(-2px) scale(1.04);
+	color: var(--accent);
+	box-shadow: var(--bevel), 0 12px 26px -12px rgba(var(--accent-rgb), .9);
+}
+
+.dl-card h3 {
+	margin-top: 1.1rem;
+	font-size: 1.35rem;
+	font-weight: 600;
+	letter-spacing: -.02em;
+}
+
+.dl-note {
+	margin-top: .3rem;
+	font-size: .88rem;
+	color: var(--muted);
+}
+
+.dl-note code {
+	font-family: ui-monospace, "SF Mono", Menlo, monospace;
+	font-size: .84em;
+	padding: .1em .4em;
+	border-radius: 6px;
+	background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+.btn-block {
+	display: flex;
+	width: 100%;
+	margin-top: 1.4rem;
+}
+
+.arch {
+	padding: .1em .55em;
+	border-radius: 999px;
+	font-size: .78em;
+	font-weight: 500;
+	letter-spacing: .02em;
+	background: rgba(255, 255, 255, .22);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18);
+}
+
+.size {
+	font-size: .8em;
+	font-weight: 500;
+	opacity: .75;
+}
+
+.size:not(:empty)::before {
+	content: "·";
+	margin-right: .4em;
+}
+
+/* dotted rule, then the secondary artifacts */
+.dl-alts {
+	margin-top: 1.1rem;
+	padding-top: 1rem;
+	border-top: 1px dashed var(--line);
+	display: grid;
+	gap: .1rem;
+}
+
+.dl-alts a,
+.dl-hint {
+	display: flex;
+	align-items: center;
+	gap: .55rem;
+	padding: .42rem .55rem;
+	margin-inline: -.55rem;
+	border-radius: 10px;
+	font-size: .88rem;
+	color: var(--ink-2);
+	transition: background-color .25s var(--ease), color .25s var(--ease);
+}
+
+.dl-alts em {
+	font-style: normal;
+	font-family: "LED Dot Matrix", monospace;
+	font-size: .95em;
+	letter-spacing: .06em;
+	color: var(--muted);
+	padding-top: .15em;
+}
+
+.dl-alts a:hover {
+	color: var(--ink);
+	background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.dl-alts a:hover .lead-dot {
+	background: var(--accent);
+	transform: scale(1.6);
+	box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .18);
+}
+
+.dl-hint {
+	color: var(--muted);
+	font-size: .82rem;
+	cursor: default;
+}
+
+.dl-foot {
+	margin-top: clamp(1.5rem, 4vw, 2.4rem);
+	text-align: center;
+	font-size: .9rem;
+	color: var(--muted);
+}
+
+.dl-foot a {
+	color: var(--ink-2);
+	border-bottom: 1px dotted var(--muted);
+}
+
+.dl-foot a:hover {
+	color: var(--accent);
+	border-color: var(--accent);
 }
 
 /* ---------- open source panel -------------------------- */

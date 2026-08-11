@@ -287,4 +287,33 @@
 
 	var year = document.getElementById('year');
 	if (year) year.textContent = new Date().getFullYear();
+
+	/* ---------------------------------------------------------
+	   4. release details
+	   the download links point at /releases/latest/download/<asset>
+	   and work on their own — this only decorates them with the
+	   tag and the file sizes of whatever that currently resolves to
+	   --------------------------------------------------------- */
+
+	var tag = document.getElementById('release-tag');
+	if (tag && window.fetch) {
+		fetch('https://api.github.com/repos/nor0x/Dots/releases/latest', {
+			headers: { Accept: 'application/vnd.github+json' }
+		}).then(function (r) {
+			if (!r.ok) throw new Error(r.status);
+			return r.json();
+		}).then(function (release) {
+			if (release.tag_name) tag.textContent = release.tag_name;
+
+			var sizes = {};
+			(release.assets || []).forEach(function (a) { sizes[a.name] = a.size; });
+
+			document.querySelectorAll('[data-size-for]').forEach(function (el) {
+				var bytes = sizes[el.getAttribute('data-size-for')];
+				if (bytes) el.textContent = Math.round(bytes / 1048576) + ' MB';
+			});
+		}).catch(function () {
+			/* offline, rate limited, whatever — the static links still work */
+		});
+	}
 })();
