@@ -48,8 +48,8 @@
 
 	--shell: 1120px;
 	--pad: clamp(1.25rem, 4vw, 2.5rem);
-	--radius: 22px;
-	--radius-sm: 13px;
+	--radius: 8px;
+	--radius-sm: 4px;
 	--ease: cubic-bezier(.2, .7, .2, 1);
 	--ease-back: cubic-bezier(.34, 1.4, .48, 1);
 }
@@ -1178,7 +1178,7 @@ ul {
 	overflow: hidden;
 	display: grid;
 	padding: clamp(2rem, 5vw, 3.6rem);
-	border-radius: calc(var(--radius) + 10px);
+	border-radius: var(--radius);
 	border: 1px solid var(--line);
 	background:
 		radial-gradient(90% 130% at 88% 6%, rgba(var(--accent-rgb), .16), transparent 58%),
